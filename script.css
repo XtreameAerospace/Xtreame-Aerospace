@@ -1,0 +1,42 @@
+const chatContainer = document.getElementById("chatContainer");
+const userInput = document.getElementById("userInput");
+
+function addMessage(text, sender) {
+  const msg = document.createElement("div");
+  msg.className = `message ${sender}`;
+  msg.textContent = text;
+  chatContainer.appendChild(msg);
+  chatContainer.scrollTop = chatContainer.scrollHeight;
+}
+
+function botReply(userText) {
+  // SIMPLE DEMO AI (replace later with real API)
+
+  let reply = "Processing Mars data... 🚀";
+
+  if (userText.toLowerCase().includes("oxygen")) {
+    reply = "Oxygen is generated using CO₂ electrolysis similar to MOXIE.";
+  } 
+  else if (userText.toLowerCase().includes("water")) {
+    reply = "Water is extracted from subsurface ice and recycled in a closed loop system.";
+  }
+  else if (userText.toLowerCase().includes("power")) {
+    reply = "Primary power comes from solar arrays with battery storage.";
+  }
+
+  setTimeout(() => addMessage(reply, "bot"), 600);
+}
+
+function sendMessage() {
+  const text = userInput.value.trim();
+  if (!text) return;
+
+  addMessage(text, "user");
+  botReply(text);
+  userInput.value = "";
+}
+
+// ENTER key support
+userInput.addEventListener("keypress", function(e) {
+  if (e.key === "Enter") sendMessage();
+});
